@@ -32,15 +32,22 @@ jobs:
           python-version: '3.11'
           cache: 'pip' # caching pip dependencies
 
-      - name: Install packaging deps
-        run: pip install cibuildwheel
+      # # https://github.com/pypa/cibuildwheel
+      # - name: cibuildwheel
+      #   # to supply cibuildwheel options, put them in 'env', like:
+      #   # env:
+      #   #   CIBW_SOME_OPTION: value
+      #   run: |
+      #     #!/bin/sh
+      #     set -eux
+      #     pip install cibuildwheel
+      #     python -m cibuildwheel --output-dir wheelhouse
 
-      # https://github.com/pypa/cibuildwheel
-      - name: Build wheel
-        run: python -m cibuildwheel --output-dir wheelhouse
-        # to supply options, put them in 'env', like:
-        # env:
-        #   CIBW_SOME_OPTION: value
+      - name: pip wheel
+        run: |
+          #!/bin/sh
+          set -eux
+          pip wheel -w wheelhouse .
 
       # https://github.com/actions/upload-artifact
       - uses: actions/upload-artifact@v3
