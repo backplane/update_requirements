@@ -1,0 +1,43 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*.*.*'
+
+permissions:
+  contents: read
+
+jobs:
+  wheels:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      # https://github.com/actions/checkout
+      - name: checkout
+        uses: actions/checkout@v3
+
+      # https://github.com/actions/setup-python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip' # caching pip dependencies
+
+      - name: Install deps
+        run: pip install cibuildwheel
+
+      # https://github.com/pypa/cibuildwheel
+      - name: Build wheel
+        run: python -m cibuildwheel --output-dir wheelhouse
+        # to supply options, put them in 'env', like:
+        # env:
+        #   CIBW_SOME_OPTION: value
+
+      # https://github.com/actions/upload-artifact
+      - uses: actions/upload-artifact@v3
+        with:
+          name: update_requirements
+          path: ./wheelhouse/*.whl
