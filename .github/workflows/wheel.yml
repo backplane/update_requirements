@@ -52,5 +52,12 @@ jobs:
       # https://github.com/actions/upload-artifact
       - uses: actions/upload-artifact@v3
         with:
-          name: update_requirements
+          retention-days: 30
           path: ./wheelhouse/*.whl
+
+      - name: create release
+        run: |
+          #!/bin/sh
+          set -eux
+          TAG="${GITHUB_REF##refs/tags/v}"  # e.g. 1.0.0
+          gh release create "v${TAG}" --generate-notes ./wheelhouse/*.whl
