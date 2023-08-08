@@ -1,0 +1,25 @@
+[project]
+name = "update_requirements"
+version = "0.1.1"
+description = "utility for updating requirements.txt files"
+readme = "README.md"
+license = {file = "LICENSE.txt"}
+authors = [
+  {name = "Backplane", email = "actualben@users.noreply.github.com"},
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python"
+]
+
+
+[project.urls]
+Homepage = "https://github.com/backplane/update_requirements"
+Repository = "https://github.com/backplane/update_requirements.git"
+Changelog = "https://github.com/backplane/update_requirements/releases"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+#[build-system]
+#requires = ["cibuildwheel ~= 2.14.1"]
