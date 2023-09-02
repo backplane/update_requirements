@@ -45,8 +45,8 @@ def updated_requirements(requirements_file: str) -> str:
     logging.info("updated_requirements processing %s", requirements_file)
 
     with open(requirements_file, "rt", encoding="utf-8") as reqfh:
-        requirements = reqfh.read().splitlines()
-    return "\n".join([get_latest_version(req) for req in sorted(requirements)])
+        requirements = reqfh.read().splitlines(False)
+    return "\n".join([get_latest_version(req.strip()) for req in sorted(requirements)])
 
 
 def get_latest_version(requirement: str) -> str:
@@ -62,7 +62,7 @@ def get_latest_version(requirement: str) -> str:
     logging.debug('get_latest_version for input "%s"', requirement)
 
     # Get the package name and version spec operator
-    if match := req_spec.match(requirement.strip()):
+    if match := req_spec.match(requirement):
         groups = match.groupdict()
         package = groups["package"]
         operator = groups["operator"]
@@ -93,7 +93,7 @@ def write_text(path: str, contents: str, encoding="utf8") -> int:
     written
     """
     with open(path, "wt", encoding=encoding) as outfh:
-        return outfh.write(contents)
+        return outfh.write(contents + "\n")
 
 
 def main() -> None:
