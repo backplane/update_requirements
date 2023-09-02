@@ -1,6 +1,6 @@
 [project]
 name = "update_requirements"
-version = "0.1.1"
+version = "0.2.0"
 description = "utility for updating requirements.txt files"
 readme = "README.md"
 license = {file = "LICENSE.txt"}
@@ -12,6 +12,8 @@ classifiers = [
   "Programming Language :: Python"
 ]
 
+[project.scripts]
+update_requirements = "update_requirements.__main__:main"
 
 [project.urls]
 Homepage = "https://github.com/backplane/update_requirements"
